@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  nextjs-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_API_URL=http://host.docker.internal:5125
+    restart: unless-stopped
+    container_name: million-properties-frontend
+
+  # Development service (optional)
+  nextjs-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3001:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    environment:
+      - NODE_ENV=development
+      - NEXT_PUBLIC_API_URL=http://host.docker.internal:5125
+    restart: unless-stopped
+    container_name: million-properties-frontend-dev
+    profiles:
+      - dev
