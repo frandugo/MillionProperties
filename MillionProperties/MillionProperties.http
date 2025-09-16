@@ -1,0 +1,151 @@
+@MillionProperties_HostAddress = http://localhost:5125
+
+### Get all owners
+GET {{MillionProperties_HostAddress}}/api/owners
+Accept: application/json
+
+### Get owner by ID
+GET {{MillionProperties_HostAddress}}/api/owners/{{ownerId}}
+Accept: application/json
+
+### Create new owner
+POST {{MillionProperties_HostAddress}}/api/owners
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "address": "123 Main St, City, State",
+  "photo": "https://example.com/photo.jpg",
+  "birthday": "1980-01-15T00:00:00Z"
+}
+
+### Update owner
+PUT {{MillionProperties_HostAddress}}/api/owners/{{ownerId}}
+Content-Type: application/json
+
+{
+  "name": "John Smith",
+  "address": "456 Oak Ave, City, State",
+  "photo": "https://example.com/newphoto.jpg",
+  "birthday": "1980-01-15T00:00:00Z"
+}
+
+### Delete owner
+DELETE {{MillionProperties_HostAddress}}/api/owners/{{ownerId}}
+
+### Get all properties
+GET {{MillionProperties_HostAddress}}/api/properties
+Accept: application/json
+
+### Get property by ID
+GET {{MillionProperties_HostAddress}}/api/properties/{{propertyId}}
+Accept: application/json
+
+### Get properties by owner ID
+GET {{MillionProperties_HostAddress}}/api/properties/owner/{{ownerId}}
+Accept: application/json
+
+### Create new property
+POST {{MillionProperties_HostAddress}}/api/properties
+Content-Type: application/json
+
+{
+  "name": "Beautiful House",
+  "address": "789 Elm St, City, State",
+  "price": 350000.00,
+  "codeInternal": "PROP001",
+  "year": 2020,
+  "ownerId": "{{ownerId}}"
+}
+
+### Update property
+PUT {{MillionProperties_HostAddress}}/api/properties/{{propertyId}}
+Content-Type: application/json
+
+{
+  "name": "Stunning Villa",
+  "address": "789 Elm St, City, State",
+  "price": 375000.00,
+  "codeInternal": "PROP001",
+  "year": 2020,
+  "ownerId": "{{ownerId}}"
+}
+
+### Delete property
+DELETE {{MillionProperties_HostAddress}}/api/properties/{{propertyId}}
+
+### Filter properties - Basic search
+GET {{MillionProperties_HostAddress}}/api/properties/filter?name=house&page=1&pageSize=10
+Accept: application/json
+
+### Filter properties - Price range
+GET {{MillionProperties_HostAddress}}/api/properties/filter?minPrice=200000&maxPrice=500000&page=1&pageSize=5
+Accept: application/json
+
+### Filter properties - Year range and address
+GET {{MillionProperties_HostAddress}}/api/properties/filter?minYear=2015&maxYear=2023&address=city&sortBy=price&sortDirection=desc
+Accept: application/json
+
+### Filter properties - Owner name search
+GET {{MillionProperties_HostAddress}}/api/properties/filter?ownerName=john&page=1&pageSize=10
+Accept: application/json
+
+### Filter properties - Complex filter with multiple parameters
+GET {{MillionProperties_HostAddress}}/api/properties/filter?name=house&minPrice=100000&maxPrice=600000&minYear=2010&address=street&sortBy=year&sortDirection=asc&page=1&pageSize=20
+Accept: application/json
+
+### Filter properties - Date range filter
+GET {{MillionProperties_HostAddress}}/api/properties/filter?createdAfter=2024-01-01T00:00:00Z&createdBefore=2024-12-31T23:59:59Z&sortBy=createdAt&sortDirection=desc
+Accept: application/json
+
+### Filter properties - Owner ID filter
+GET {{MillionProperties_HostAddress}}/api/properties/filter?ownerId={{ownerId}}&sortBy=name&sortDirection=asc
+Accept: application/json
+
+### Filter properties - Internal code search
+GET {{MillionProperties_HostAddress}}/api/properties/filter?codeInternal=PROP&page=1&pageSize=15
+Accept: application/json
+
+### Get all property traces
+GET {{MillionProperties_HostAddress}}/api/propertytraces
+Accept: application/json
+
+### Get property trace by ID
+GET {{MillionProperties_HostAddress}}/api/propertytraces/{{propertyTraceId}}
+Accept: application/json
+
+### Get property traces by property ID
+GET {{MillionProperties_HostAddress}}/api/propertytraces/property/{{propertyId}}
+Accept: application/json
+
+### Create new property trace
+POST {{MillionProperties_HostAddress}}/api/propertytraces
+Content-Type: application/json
+
+{
+  "propertyId": "{{propertyId}}",
+  "dateSale": "2024-01-15T10:30:00Z",
+  "name": "Initial Sale",
+  "value": 450000.00,
+  "tax": 22500.00
+}
+
+### Update property trace
+PUT {{MillionProperties_HostAddress}}/api/propertytraces/{{propertyTraceId}}
+Content-Type: application/json
+
+{
+  "propertyId": "{{propertyId}}",
+  "dateSale": "2024-02-20T14:45:00Z",
+  "name": "Updated Sale Record",
+  "value": 475000.00,
+  "tax": 23750.00
+}
+
+### Delete property trace
+DELETE {{MillionProperties_HostAddress}}/api/propertytraces/{{propertyTraceId}}
+
+### Delete all property traces for a property
+DELETE {{MillionProperties_HostAddress}}/api/propertytraces/property/{{propertyId}}
+
+###

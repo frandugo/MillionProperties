@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:7.0
+    container_name: millionproperties-mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password123
+      MONGO_INITDB_DATABASE: MillionPropertiesDB
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - millionproperties-network
+
+  api:
+    build: .
+    container_name: millionproperties-api
+    restart: unless-stopped
+    ports:
+      - "5125:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__MongoDb=mongodb://admin:password123@mongodb:27017/MillionPropertiesDB?authSource=admin
+    depends_on:
+      - mongodb
+    networks:
+      - millionproperties-network
+
+volumes:
+  mongodb_data:
+
+networks:
+  millionproperties-network:
+    driver: bridge
